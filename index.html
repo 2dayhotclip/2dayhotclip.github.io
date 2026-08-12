@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>쇼핑 리스트</title>
+<style>
+  :root {
+    --bg: #0f1115; --card: #1a1e26; --card-hi: #232936;
+    --text: #f2f4f8; --muted: #9aa3b2; --accent: #ffd451;
+    --ring: rgba(255, 212, 81, .55);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f7f9; --card: #ffffff; --card-hi: #fff7e0;
+      --text: #171a20; --muted: #667085; --accent: #b8860b;
+      --ring: rgba(184, 134, 11, .45);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; padding: 28px 16px 48px; }
+  header { text-align: center; margin-bottom: 18px; }
+  header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
+  header p { margin-top: 6px; font-size: 13px; color: var(--muted); }
+  .disclosure {
+    font-size: 12px; line-height: 1.5; color: var(--muted);
+    background: var(--card); border-radius: 10px;
+    padding: 10px 12px; margin-bottom: 18px; text-align: center;
+  }
+  ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  a.item {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border-radius: 14px;
+    padding: 14px; min-height: 68px;
+    text-decoration: none; color: var(--text);
+    transition: transform .06s ease;
+  }
+  a.item:active { transform: scale(.985); }
+  li:target a.item, a.item.hi { background: var(--card-hi); box-shadow: 0 0 0 2px var(--ring); }
+  .num {
+    flex: none; width: 40px; height: 40px; border-radius: 12px;
+    background: var(--accent); color: #14161a;
+    font-weight: 800; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info { flex: 1; min-width: 0; }
+  .name { font-size: 15px; font-weight: 700; line-height: 1.35; word-break: keep-all; }
+  .price { margin-top: 3px; font-size: 13px; color: var(--muted); }
+  .go { flex: none; color: var(--muted); font-size: 18px; }
+  .empty { text-align: center; color: var(--muted); font-size: 14px; padding: 40px 0; }
+  footer { margin-top: 26px; text-align: center; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>쇼핑 리스트</h1>
+      <p>영상에서 소개한 제품들을 번호로 모아뒀어요</p>
+    </header>
+    <p class="disclosure">이 페이지의 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+    <ul>
+      <li id="item-2"><a class="item" href="https://link.coupang.com/a/f9eSuCUVRk?subId=hub2" target="_blank" rel="sponsored nofollow noopener"><span class="num">2</span><span class="info"><div class="name">욕실온풍기 (벽걸이 욕실히터)</div><div class="price">106,610원</div></span><span class="go">›</span></a></li>
+    </ul>
+    <footer>업데이트 2026-08-12</footer>
+  </div>
+</body>
+</html>
