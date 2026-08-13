@@ -55,6 +55,19 @@
   .go { flex: none; color: var(--muted); font-size: 18px; }
   .empty { text-align: center; color: var(--muted); font-size: 14px; padding: 40px 0; }
   footer { margin-top: 26px; text-align: center; font-size: 11px; color: var(--muted); }
+  #finder { margin-bottom: 14px; }
+  #q {
+    width: 100%; padding: 13px 16px; font-size: 16px;
+    background: var(--card); color: var(--text);
+    border: 1.5px solid transparent; border-radius: 14px; outline: none;
+    font-family: inherit;
+  }
+  #q:focus { border-color: var(--ring); }
+  #q::placeholder { color: var(--muted); }
+  #nores {
+    display: none; text-align: center; color: var(--muted);
+    font-size: 13px; padding: 24px 0;
+  }
 </style>
 </head>
 <body>
@@ -64,12 +77,50 @@
       <p>영상에서 소개한 제품들을 번호로 모아뒀어요</p>
     </header>
     <p class="disclosure">이 페이지의 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+    <form id="finder" autocomplete="off">
+      <input id="q" type="search" inputmode="search" enterkeyhint="go"
+             placeholder="영상 속 번호를 입력하세요 (예: 2)" aria-label="번호 또는 상품명으로 찾기">
+    </form>
     <ul>
       <li id="item-4"><a class="item" href="https://link.coupang.com/a/gaUyHBMgJo?subId=hub4" target="_blank" rel="sponsored nofollow noopener"><span class="num">4</span><span class="info"><div class="name">케어팟 가열식 가습기 (스테인리스 통세척)</div></span><span class="go">›</span></a></li>
       <li id="item-3"><a class="item" href="https://link.coupang.com/a/gaIldN0Bsi?subId=hub3" target="_blank" rel="sponsored nofollow noopener"><span class="num">3</span><span class="info"><div class="name">리빙웰 30L 에어프라이어 오븐</div></span><span class="go">›</span></a></li>
       <li id="item-2"><a class="item" href="https://link.coupang.com/a/f9eSuCUVRk?subId=hub2" target="_blank" rel="sponsored nofollow noopener"><span class="num">2</span><span class="info"><div class="name">욕실온풍기 (벽걸이 욕실히터)</div></span><span class="go">›</span></a></li>
     </ul>
+    <p id="nores">일치하는 제품이 없어요 — 번호를 다시 확인해 주세요</p>
     <footer>업데이트 2026-08-13</footer>
   </div>
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var nores = document.getElementById('nores');
+  var items = [].slice.call(document.querySelectorAll('ul li')).filter(function (li) {
+    return li.querySelector('a.item');
+  });
+  function apply() {
+    var v = q.value.trim();
+    var visible = [];
+    items.forEach(function (li) {
+      var a = li.querySelector('a.item');
+      var num = li.querySelector('.num').textContent.trim();
+      var name = li.querySelector('.name').textContent.toLowerCase();
+      var show = !v || (/^\d+$/.test(v) ? num === v : name.indexOf(v.toLowerCase()) !== -1);
+      li.style.display = show ? '' : 'none';
+      a.classList.toggle('hi', Boolean(v) && show);
+      if (show) visible.push(a);
+    });
+    nores.style.display = (v && visible.length === 0) ? 'block' : 'none';
+    return visible;
+  }
+  q.addEventListener('input', apply);
+  document.getElementById('finder').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var visible = apply();
+    if (visible.length === 1) { location.href = visible[0].href; }
+    else if (visible.length > 1) {
+      visible[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+})();
+</script>
 </body>
 </html>
